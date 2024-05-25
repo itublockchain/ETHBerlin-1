@@ -12,6 +12,8 @@
   "dependencies": {
     "@types/express": "^4.17.21",
     "eth-hd-wallet": "^0.5.1",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   }
 }
