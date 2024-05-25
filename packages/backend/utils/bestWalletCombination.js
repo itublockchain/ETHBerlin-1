@@ -6,13 +6,15 @@ const provider = new Web3.providers.HttpProvider(
 );
 const web3 = new Web3(provider);
 
-async function bestWalletCombination(mnemonic, amount) {
+async function bestWalletCombination(mnemonic, amount, nonce) {
   const wallet = EthHdWallet.fromMnemonic(mnemonic);
-  let map = new Map(
-    wallet
-      .getAddresses()
-      .map(async (address) => [address, await web3.eth.getBalance(address)])
-  );
+  let map = new Map();
+  const addresses = wallet.generateAddreses(nonce);
+  for (let i = 0; i < addresses.length; i++) {
+      map.set(i, await web3.eth.getBalance(addresses[i]));
+  }
+
+  // let map = new Map(wallet.getAddresses().map(async (address: string) => [address, await web3.eth.getBalance(address)]));
 
   for (let i = 0; i < map.size; i++) {
     for (let j = 0; j < map.size - i - 1; j++) {
@@ -25,8 +27,8 @@ async function bestWalletCombination(mnemonic, amount) {
   } // Obtain descending sorted map with Bubble Sort Algorithm
 
   let output = new Map();
-  for (const [address, balance] of map) {
-    output.set(address, balance);
+  for (const [nonce, balance] of map) {
+    output.set(nonce, balance);
     amount -= balance;
     if (amount <= 0) {
       break;

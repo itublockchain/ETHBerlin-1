@@ -35,7 +35,11 @@ app.post("/generateTempAddress", (req, res) => {
 });
 
 app.post("/send-eth", (req, res) => {
-  signTransaction(req.body.mnemonic, req.body.to, req.body.amount);
+  signTransaction(req.body.mnemonic, req.body.to, req.body.amount, req.body.nonce);
+});
+
+app.post("/take-balances", (req, res) => {
+  signTransaction(req.body.mnemonic, req.body.nonce);
 });
 
 app.listen(port, () => {

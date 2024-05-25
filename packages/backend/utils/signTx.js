@@ -3,18 +3,18 @@ const { Web3 } = require("web3");
 
 const { bestWalletCombination } = require("./bestWalletCombination");
 
-async function signTransaction(mnemonic, to, amount) {
-  let output = await bestWalletCombination(mnemonic, amount);
+async function signTransaction(mnemonic, to, amount, nonce) {
+  let output = await bestWalletCombination(mnemonic, amount, nonce);
   let rawTx = [];
 
   const wallet = EthHdWallet.fromMnemonic(mnemonic);
 
-  for (let [nonce, balance] of output) {
+  for (let [n, balance] of output) {
     let raw = wallet.signTransaction({
-      from: wallet.getAddresses()[nonce],
+      from: wallet.generateAddresses(nonce)[n],
       to: to,
       value: balance,
-      nonce: nonce,
+      nonce: n,
       gasPrice: 50000000000,
       gasLimit: 21000,
       chainId: 1,
