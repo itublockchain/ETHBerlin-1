@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "initialize_backend": "cd packages && cd backend && npm i",
-    "start_backend": "cd packages && cd backend && npm start"
+    "initialize_backend": "npm i",
+    "start_backend": "npm start"
   },
   "keywords": [],
   "author": "",
