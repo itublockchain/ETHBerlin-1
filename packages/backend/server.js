@@ -4,6 +4,7 @@ const port = 3000;
 const { createMainWallet } = require("./utils/createMainWallet");
 const { generateTempAddresses } = require("./utils/generateTempAddresses");
 const { signTransaction } = require("./utils/signTx");
+const { balanceChecker_nonce, balanceChecker_address } = require("./utils/balanceChecker");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const bodyParser = require("body-parser");
@@ -43,8 +44,13 @@ app.post("/send-eth", (req, res) => {
   signTransaction(req.body.mnemonic, req.body.to, req.body.amount, req.body.nonce);
 });
 
-app.post("/take-balances", (req, res) => {
-  signTransaction(req.body.mnemonic, req.body.nonce);
+app.post("/take-balances-with-nonce", (req, res) => {
+  balanceChecker_nonce(req.body.mnemonic, req.body.nonce).then((output) => {res.send(output);});
+
+});
+
+app.post("/take-balances-with-address", (req, res) => {
+  balanceChecker_address(req.body.mnemonic, req.body.nonce).then((output) => {res.send(output);})
 });
 
 app.listen(port, () => {

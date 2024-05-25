@@ -6,7 +6,7 @@ const provider = new Web3.providers.HttpProvider(
 );
 const web3 = new Web3(provider);
 
-async function balanceChecker (mnemonic, nonce) {
+async function balanceChecker_nonce (mnemonic, nonce) {
   const wallet = EthHdWallet.fromMnemonic(mnemonic);
   let map = new Map();
   const addresses = wallet.generateAddresses(nonce);
@@ -17,4 +17,11 @@ async function balanceChecker (mnemonic, nonce) {
   return output;
 }
 
-module.exports = { balanceChecker };
+async function balanceChecker_address (mnemonic, nonce) {
+  const wallet = EthHdWallet.fromMnemonic(mnemonic);
+  let map = new Map(wallet.generateAddresses(nonce).map(async (address) => [address, await web3.eth.getBalance(address)]));
+
+  return map;
+}
+
+module.exports = { balanceChecker_nonce, balanceChecker_address };
