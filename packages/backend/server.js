@@ -4,7 +4,10 @@ const port = 3000;
 const { createMainWallet } = require("./utils/createMainWallet");
 const { generateTempAddresses } = require("./utils/generateTempAddresses");
 const { signTransaction } = require("./utils/signTx");
-const { balanceChecker_nonce, balanceChecker_address } = require("./utils/balanceChecker");
+const {
+  balanceChecker_nonce,
+  balanceChecker_address,
+} = require("./utils/balanceChecker");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const bodyParser = require("body-parser");
@@ -22,7 +25,7 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
@@ -33,24 +36,32 @@ app.post("/createMainWallet", (req, res) => {
 });
 
 app.post("/generateTempAddress", (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   generateTempAddresses(req.body.nonce, req.body.mnemonic).then((addresses) => {
-
     res.send(addresses);
   });
 });
 
 app.post("/send-eth", (req, res) => {
-  signTransaction(req.body.mnemonic, req.body.to, req.body.amount, req.body.nonce);
+  signTransaction(
+    req.body.mnemonic,
+    req.body.to,
+    req.body.amount,
+    req.body.nonce
+  );
 });
 
 app.post("/take-balances-with-nonce", (req, res) => {
-  balanceChecker_nonce(req.body.mnemonic, req.body.nonce).then((output) => {res.send(output);});
-
+  balanceChecker_nonce(req.body.mnemonic, req.body.nonce).then((output) => {
+    res.send(output);
+  });
 });
 
 app.post("/take-balances-with-address", (req, res) => {
-  balanceChecker_address(req.body.mnemonic, req.body.nonce).then((output) => {res.send(output);})
+  balanceChecker_address(req.body.mnemonic, req.body.nonce).then((output) => {
+    console.log(output);
+    res.send(Array.from(output));
+  });
 });
 
 app.listen(port, () => {

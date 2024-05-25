@@ -11,7 +11,9 @@ async function bestWalletCombination(mnemonic, amount, nonce) {
   let map = new Map();
   const addresses = wallet.generateAddreses(nonce);
   for (let i = 0; i < addresses.length; i++) {
-      map.set(i, await web3.eth.getBalance(addresses[i]));
+    const wei = await web3.eth.getBalance(addresses[i]);
+    const number = Number(web3.utils.fromWei(wei, "ether"));
+    map.set(i, number);
   }
 
   // let map = new Map(wallet.getAddresses().map(async (address: string) => [address, await web3.eth.getBalance(address)]));
