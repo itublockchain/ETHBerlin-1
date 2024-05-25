@@ -19,7 +19,7 @@ function IndexPopup() {
   return (
     <div className="w-full h-screen flex flex-col">
       <Background />
-      <div className="flex-1">
+      <div className="flex-1 overflow-hidden pb-[60px]">
         <Topbar />
         <Router>
           <RouterPage element={<Home />} path="/" />
