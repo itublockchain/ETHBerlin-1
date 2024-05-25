@@ -6,6 +6,7 @@ const { generateTempAddresses } = require("./utils/generateTempAddresses");
 const { signTransaction } = require("./utils/signTx");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const bodyParser = require("body-parser");
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
@@ -20,6 +21,8 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
+app.use(bodyParser.json())
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.post("/createMainWallet", (req, res) => {
@@ -29,7 +32,9 @@ app.post("/createMainWallet", (req, res) => {
 });
 
 app.post("/generateTempAddress", (req, res) => {
+  console.log(req.body)
   generateTempAddresses(req.body.nonce, req.body.mnemonic).then((addresses) => {
+
     res.send(addresses);
   });
 });
