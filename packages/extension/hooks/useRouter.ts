@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { create } from "zustand"
 
-const initialRoute = "/"
+const initialRoute = "/wallet"
 
 interface HookType {
   path: string

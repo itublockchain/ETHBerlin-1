@@ -10,8 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "eth-hd-wallet": "^0.5.1",
     "express": "^4.19.2",
+<<<<<<< Updated upstream
     "web3": "^4.9.0"
+=======
+    "faker": "^6.6.6"
+>>>>>>> Stashed changes
   }
 }
