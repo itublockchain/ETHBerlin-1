@@ -4,6 +4,7 @@ import { TfiReload } from "react-icons/tfi"
 
 import { sendToBackground } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
+import { useStorage } from "@plasmohq/storage/hook"
 
 import WalletContainer from "~components/walletContainer"
 import { colors } from "~constants"
@@ -16,12 +17,15 @@ const storage = new Storage()
 const Wallet = () => {
   const { setUserProp, user } = useUser()
 
+  const [ip] = useStorage("ip")
+
   const getBalances = async () => {
     const res = await sendToBackground({
       name: "getBalances",
       body: {
         nonce: Math.max(+(await storage.get("nonce")), 1),
-        wallet_seed: await storage.get("wallet_seed")
+        wallet_seed: await storage.get("wallet_seed"),
+        ip
       }
     })
     setUserProp("balances", Object.values(res.message) as User["balances"])
@@ -33,7 +37,8 @@ const Wallet = () => {
       body: {
         wallet_seed: await storage.get("wallet_seed"),
         nonce: await storage.get("nonce"),
-        type: "increase"
+        type: "increase",
+        ip
       }
     })
 

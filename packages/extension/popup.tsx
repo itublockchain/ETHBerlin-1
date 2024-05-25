@@ -6,6 +6,7 @@ import { useEffect } from "react"
 
 import { sendToBackground } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
+import { useStorage } from "@plasmohq/storage/hook"
 
 import Background from "~components/background"
 import BottomBar from "~components/bottom-bar"
@@ -26,12 +27,15 @@ function IndexPopup() {
 
   const { setUserProp } = useUser()
 
+  const [ip] = useStorage("ip")
+
   const getBalances = async () => {
     const res = await sendToBackground({
       name: "getBalances",
       body: {
         nonce: Math.max(+(await storage.get("nonce")), 1),
-        wallet_seed: await storage.get("wallet_seed")
+        wallet_seed: await storage.get("wallet_seed"),
+        ip
       }
     })
     setUserProp("balances", Object.values(res.message) as User["balances"])
@@ -47,7 +51,8 @@ function IndexPopup() {
       body: {
         nonce: Math.max(+(await storage.get("nonce")), 1),
         wallet_address: (await storage.get("wallet_address")) ?? null,
-        wallet_seed: (await storage.get("wallet_seed")) ?? null
+        wallet_seed: (await storage.get("wallet_seed")) ?? null,
+        ip
       }
     })
 
@@ -60,7 +65,8 @@ function IndexPopup() {
       name: "generateTempAddress",
       body: {
         nonce: Math.max(+(await storage.get("nonce")), 1),
-        wallet_seed: await storage.get("wallet_seed")
+        wallet_seed: await storage.get("wallet_seed"),
+        ip
       }
     })
   }

@@ -1,9 +1,15 @@
 import React, { useRef, useState } from "react"
 
+import { sendToBackground } from "@plasmohq/messaging"
+import { Storage } from "@plasmohq/storage"
+import { useStorage } from "@plasmohq/storage/hook"
+
 import Input from "~components/input"
 import useRouter from "~hooks/useRouter"
 import useTotalBalance from "~hooks/useTotalBalance"
 import { useUser } from "~hooks/useUser"
+
+const storage = new Storage()
 
 const Send = () => {
   const amountRef = useRef<HTMLInputElement>(null)
@@ -16,6 +22,25 @@ const Send = () => {
 
   const [address, setAddress] = useState("")
   const [amount, setAmount] = useState(0)
+
+  const [ip] = useStorage("ip")
+
+  const sendAmount = async () => {
+    const res = await sendToBackground({
+      name: "send",
+      body: {
+        wallet_seed: await storage.get("wallet_seed"),
+        nonce: await storage.get("nonce"),
+        amount: amount,
+        to: address,
+        ip
+      }
+    })
+    if (res.status === 200) {
+      alert("Success")
+      navigate("/")
+    }
+  }
 
   return (
     <div className="px-6">
@@ -70,7 +95,9 @@ const Send = () => {
           className="border-[2px] rounded-lg py-3 text-xl border-primary text-primary font-bold flex-1">
           Cancel
         </button>
-        <button className="bg-primary rounded-lg py-3 text-xl text-white font-bold flex-1 self-stretch">
+        <button
+          onClick={() => {}}
+          className="bg-primary rounded-lg py-3 text-xl text-white font-bold flex-1 self-stretch">
           Next
         </button>
       </div>

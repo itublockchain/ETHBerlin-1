@@ -26,7 +26,7 @@ const Topbar = () => {
 
   const { user } = useUser()
 
-  const walletAddress = user.wallet_address ?? "0xc12e122134214214124"
+  const walletAddress = user.balances?.[0]?.[0] ?? "0xc12e122134214214124"
 
   const copyToClipboard = () => {
     if (!navigator.clipboard) {
