@@ -59,7 +59,6 @@ app.post("/take-balances-with-nonce", (req, res) => {
 
 app.post("/take-balances-with-address", (req, res) => {
   balanceChecker_address(req.body.mnemonic, req.body.nonce).then((output) => {
-    console.log(output);
     res.send(Array.from(output));
   });
 });

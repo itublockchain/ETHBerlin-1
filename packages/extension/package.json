@@ -13,6 +13,9 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@plasmohq/messaging": "^0.6.2",
+    "@plasmohq/storage": "^1.10.0",
+    "axios": "^1.7.2",
     "clipboard.js": "^1.0.1",
     "ethers": "^6.12.1",
     "metamask-extension-provider": "^3.0.0",

@@ -14,10 +14,12 @@ const Home = () => {
 
   return (
     <div className="flex h-full flex-col pb-5 basis-0 ">
-      <h2 className="text-center text-white font-bold text-3xl py-6">
-        {user.total_balance ?? "$100"}
-      </h2>
-      <div className="flex items-center justify-center gap-x-4 py-3">
+      <div className="flex items-center justify-between gap-x-4 py-3 px-3">
+        <h2 className="text-center text-white font-bold text-3xl py-6">
+          {user.balances
+            ?.map((balance) => +balance[1])
+            .reduce((a, b) => a + b, 0) ?? "$100"}
+        </h2>
         <div
           onClick={() => {
             navigate("/send")
@@ -25,10 +27,6 @@ const Home = () => {
           className="border-primary text-white border-[2px] gap-x-2 cursor-pointer items-center justify-center px-2 py-1 rounded-md bg-opacity-50 font-bold flex">
           <ArrowSVG />
           send
-        </div>
-        <div className="border-primary text-white border-[2px] gap-x-2 cursor-pointer items-center justify-center px-2 py-1 rounded-md bg-opacity-50  font-bold flex">
-          <ArrowSVG className="rotate-[180deg]" />
-          receive
         </div>
       </div>
       <div className="flex-1 flex flex-col overflow-hidden">

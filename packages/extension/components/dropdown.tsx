@@ -33,12 +33,14 @@ const IconOption = (props: any) => {
 
 const Dropdown: React.FC<{
   items: ItemType
-}> = ({ items }) => {
+  disabled?: boolean
+}> = ({ items, disabled }) => {
   return (
     <Select
       options={items}
       defaultInputValue={items?.[0]?.label}
       defaultValue={items?.[0]?.value}
+      isDisabled={disabled}
       styles={{
         control: (base) => ({
           ...base,
@@ -48,13 +50,22 @@ const Dropdown: React.FC<{
           borderColor: colors.secondary,
           color: colors.quaternary
         }),
+        singleValue: (base) => ({
+          ...base,
+          color: colors.quaternary
+        }),
+        container: (base) => ({
+          ...base,
+          color: "white"
+        }),
         valueContainer: (base) => ({
           ...base,
           color: colors.quaternary
         }),
         input: (base) => ({
           ...base,
-          color: colors.quaternary
+          color: colors.quaternary,
+          visibility: "unset"
         }),
         option: (base) => ({
           ...base,

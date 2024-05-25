@@ -1,5 +1,8 @@
 import React from "react"
 
+import { Storage } from "@plasmohq/storage"
+import { useStorage } from "@plasmohq/storage/hook"
+
 import { walletShorten } from "~helpers"
 import { useUser } from "~hooks/useUser"
 import ClipboardSVG from "~svg/clipboard"
@@ -8,11 +11,18 @@ import EthereumSVG from "~svg/ethereum"
 import Dropdown, { type ItemType } from "./dropdown"
 
 const Topbar = () => {
+  const [wallet_seed] = useStorage("wallet_seed")
+
   const techItems: ItemType = [
     { label: "ETH", Icon: EthereumSVG, hideLabel: true, value: "eth" }
   ]
 
-  const accountItems: ItemType = []
+  const accountItems: ItemType = [
+    {
+      label: "John Doe",
+      value: "john-doe"
+    }
+  ]
 
   const { user } = useUser()
 
@@ -32,7 +42,7 @@ const Topbar = () => {
           <h3 className="text-white">Logo</h3>
         </div>
         <div className="w-[120px] flex flex-col">
-          <Dropdown items={accountItems} />
+          <Dropdown disabled items={accountItems} />
           <div className="flex justify-start items-center gap-x-2 py-1">
             <div className=" text-white font-bold ">
               {walletShorten(walletAddress)}
@@ -44,7 +54,7 @@ const Topbar = () => {
             </button>
           </div>
         </div>
-        <Dropdown items={techItems} />
+        <Dropdown disabled items={techItems} />
       </div>
     </header>
   )

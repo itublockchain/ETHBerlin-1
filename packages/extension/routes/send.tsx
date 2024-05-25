@@ -1,12 +1,21 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 
 import Input from "~components/input"
 import useRouter from "~hooks/useRouter"
+import useTotalBalance from "~hooks/useTotalBalance"
+import { useUser } from "~hooks/useUser"
 
 const Send = () => {
   const amountRef = useRef<HTMLInputElement>(null)
 
   const { navigate } = useRouter()
+
+  const { user } = useUser()
+
+  const [totalBalance] = useTotalBalance()
+
+  const [address, setAddress] = useState("")
+  const [amount, setAmount] = useState(0)
 
   return (
     <div className="px-6">
@@ -23,12 +32,23 @@ const Send = () => {
           }}
           className="bg-secondary border-[1px]  rounded-md flex-1 flex justify-between items-center px-2 border-white">
           <div>
-            <Input ref={amountRef} type="number" className="border-none pl-0" />
+            <Input
+              min={0}
+              max={totalBalance}
+              onChange={(e) => {
+                setAmount(+e.target.value)
+              }}
+              value={totalBalance}
+              ref={amountRef}
+              type="number"
+              className="border-none pl-0"
+            />
             <span>0.0002$</span>
           </div>
 
           <button
             onClick={(e) => {
+              setAmount(totalBalance)
               e.stopPropagation()
             }}
             className=" bg-primary-dark px-2 py-1 text-white rounded-md">
