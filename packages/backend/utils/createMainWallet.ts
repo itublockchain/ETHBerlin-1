@@ -5,7 +5,7 @@ interface Wallet {
     wallet: EthHdWallet;
 }
 
-export function createMainWallet(): Wallet {
+export async function createMainWallet(): Promise<Wallet> {
   const mnemonic = generateMnemonic();
   const wallet = EthHdWallet.fromMnemonic(mnemonic);
   return { mnemonic: mnemonic, wallet: wallet };

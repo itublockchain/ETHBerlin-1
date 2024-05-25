@@ -2,9 +2,18 @@ const express = require("express");
 const app = express();
 const port = 3000;
 import * as Express from "express";
+import { createMainWallet, generateTempAddresses, sendEth } from './utils/index';
 
-app.get("/", (req: Express.Request, res: Express.Response) => {
-  res.send("Hello World!");
+app.post("/createMainWallet", (req: Express.Request, res: Express.Response) => {
+  createMainWallet().then((wallet) => {res.send(wallet);})
+});
+
+app.post("/generateTempAddress", (req: Express.Request, res: Express.Response) => {
+  generateTempAddresses(req.body.nonce, req.body.mnemonic).then((addresses) => {res.send(addresses);})  
+});
+
+app.post("/send-eth", (req: Express.Request, res: Express.Response) => {
+  sendEth(req.body.mnemonic, req.body.to, req.body.amount).then((tx) => {res.send(tx);})
 });
 
 app.listen(port, () => {
