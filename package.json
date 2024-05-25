@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "initialize_backend": "cd packages && cd backend && npm i",
+    "start_backend": "cd packages && cd backend && npm start"
+
   },
   "keywords": [],
   "author": "",
@@ -14,10 +17,7 @@
     "@faker-js/faker": "^8.4.1",
     "eth-hd-wallet": "^0.5.1",
     "express": "^4.19.2",
-<<<<<<< Updated upstream
+    "faker": "^6.6.6",
     "web3": "^4.9.0"
-=======
-    "faker": "^6.6.6"
->>>>>>> Stashed changes
   }
 }
