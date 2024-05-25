@@ -10,3 +10,5 @@ const testMnemonic =
 
 const wallet = EthHdWallet.fromMnemonic(testMnemonic);
 console.log(wallet.generateAddresses(5));
+
+const test = "";
