@@ -9,7 +9,7 @@ const web3 = new Web3(provider);
 async function balanceChecker_nonce(mnemonic, nonce) {
   const wallet = await EthHdWallet.fromMnemonic(mnemonic);
   let map = new Map();
-  const addresses = wallet.generateAddresses(nonce);
+  const addresses = wallet.getAddresses();
   for (let i = 0; i < addresses.length; i++) {
     const wei = await web3.eth.getBalance(addresses[i]);
     const number = Number(web3.utils.fromWei(wei, "ether"));
@@ -24,7 +24,7 @@ async function balanceChecker_address(mnemonic, nonce) {
   console.log(wallet.generateAddresses(nonce));
   let map = new Map();
 
-  const addresses = wallet.generateAddresses(nonce);
+  const addresses = wallet.getAddresses();
   for (let i = 0; i < addresses.length; i++) {
     const wei = await web3.eth.getBalance(addresses[i]);
     const number = Number(web3.utils.fromWei(wei, "ether"));

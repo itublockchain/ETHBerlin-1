@@ -9,7 +9,7 @@ const web3 = new Web3(provider);
 async function bestWalletCombination(mnemonic, amount, nonce) {
   const wallet = EthHdWallet.fromMnemonic(mnemonic);
   let map = new Map();
-  const addresses = wallet.generateAddreses(nonce);
+  const addresses = wallet.getAddresses();
   for (let i = 0; i < addresses.length; i++) {
     const wei = await web3.eth.getBalance(addresses[i]);
     const number = Number(web3.utils.fromWei(wei, "ether"));
