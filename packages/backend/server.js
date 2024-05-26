@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require('cors')
 const app = express();
-app.use(cors());X
+app.use(cors());
 const port = 3000;
 const { createMainWallet } = require("./utils/createMainWallet");
 const { generateTempAddresses } = require("./utils/generateTempAddresses");
