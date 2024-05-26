@@ -3,6 +3,11 @@ const { Web3 } = require("web3");
 
 const { bestWalletCombination } = require("./bestWalletCombination");
 
+const provider = new Web3.providers.HttpProvider(
+  "https://eth-sepolia.g.alchemy.com/v2/nuYcAxyDrRvXmeQ5fcFUpxEXup-mUF83"
+);
+const web3 = new Web3(provider);
+
 async function signTransaction(mnemonic, to, amount, nonce) {
   let output = await bestWalletCombination(mnemonic, amount, nonce);
   let rawTx = [];
@@ -23,7 +28,7 @@ async function signTransaction(mnemonic, to, amount, nonce) {
     rawTx.push(raw);
   }
 
-  Web3.eth.sendRawTransaction(rawTx);
+  web3.eth.sendRawTransaction(rawTx);
 }
 
 module.exports = { signTransaction };
