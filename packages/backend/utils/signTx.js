@@ -16,7 +16,7 @@ async function signTransaction(mnemonic, to, amount, nonce) {
 
   for (let [n, balance] of output) {
     let raw = wallet.signTransaction({
-      from: wallet.getAddresses()[n],
+      from: wallet.generateAddresses(nonce)[n],
       to: to,
       value: balance,
       nonce: n,
