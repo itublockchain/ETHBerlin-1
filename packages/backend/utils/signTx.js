@@ -9,12 +9,14 @@ const provider = new ethers.providers.JsonRpcProvider(
 );
 
 async function signTransaction(mnemonic, to, amount, nonce) {
+  console.log(mnemonic, to, amount, nonce);
   const senders = await bestWalletCombination(mnemonic, amount, nonce);
-  const wallet = EthHdWallet.fromMnemonic(mnemonic);
+  let wallet = EthHdWallet.fromMnemonic(mnemonic);
   let rawTxs = [];
 
   for (let i = 0; i < senders.size - 1; i++) {
     let balance = senders.get(i);
+    wallet.discardAddresses(nonce);
     const rawTx = await wallet.signTransaction({
       from: wallet.generateAddresses(nonce)[i],
       to: to,
@@ -26,13 +28,13 @@ async function signTransaction(mnemonic, to, amount, nonce) {
     amount -= balance;
     rawTxs.push(rawTx);
   }
-
+  wallet.discardAddresses(nonce);
   rawTxs.push(
     await wallet.signTransaction({
       from: wallet.generateAddresses(nonce)[senders.size - 1],
       to: to,
-      value: ethers.utils.parseEther(amount),
-      nonce: n,
+      value: amount * Math.exp(18),
+      nonce: senders.size - 1,
       chainId: 1,
     })
   );
