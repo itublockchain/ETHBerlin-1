@@ -13,6 +13,7 @@ const {
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
@@ -28,6 +29,8 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 app.use(bodyParser.json());
+
+app.use(cors());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
@@ -45,12 +48,13 @@ app.post("/generateTempAddress", (req, res) => {
 });
 
 app.post("/send-eth", (req, res) => {
-  signTransaction(
+  const tx = signTransaction(
     req.body.mnemonic,
     req.body.to,
     req.body.amount,
     req.body.nonce
   );
+  res.send(tx);
 });
 
 app.post("/take-balances-with-nonce", (req, res) => {

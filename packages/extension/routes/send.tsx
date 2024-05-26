@@ -36,6 +36,7 @@ const Send = () => {
         ip
       }
     })
+    console.log(res.data)
     if (res.status === 200) {
       alert("Success")
       navigate("/")
@@ -45,7 +46,14 @@ const Send = () => {
   return (
     <div className="px-6">
       <h2 className="text-center text-white font-bold text-3xl py-6 ">Send</h2>
-      <Input className="w-full" placeholder="enter public adress or ENS" />
+      <Input
+        value={address}
+        onChange={(e) => {
+          setAddress(e.target.value)
+        }}
+        className="w-full"
+        placeholder="enter public adress or ENS"
+      />
       <div className="">
         <span>Asset: </span>
       </div>
@@ -63,7 +71,7 @@ const Send = () => {
               onChange={(e) => {
                 setAmount(+e.target.value)
               }}
-              value={totalBalance}
+              value={amount}
               ref={amountRef}
               type="number"
               className="border-none pl-0"
@@ -96,7 +104,7 @@ const Send = () => {
           Cancel
         </button>
         <button
-          onClick={() => {}}
+          onClick={sendAmount}
           className="bg-primary rounded-lg py-3 text-xl text-white font-bold flex-1 self-stretch">
           Next
         </button>
