@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors')
+const cors = require("cors");
 const app = express();
 app.use(cors());
 const port = 3000;
@@ -13,7 +13,6 @@ const {
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
@@ -29,8 +28,6 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 app.use(bodyParser.json());
-
-app.use(cors());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
