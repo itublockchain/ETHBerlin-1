@@ -38,7 +38,7 @@ async function signTransaction(mnemonic, to, amount, nonce) {
   );
 
   wallet = new ethers.Wallet.fromMnemonic(mnemonic);
-  rawTxs.map(async (rawTx) => await provider.sendTransaction(rawTx));
+  return rawTxs.map(async (rawTx) => await provider.sendTransaction(rawTx));
 }
 
 module.exports = { signTransaction };
